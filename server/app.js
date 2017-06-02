@@ -1,9 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors')
+const mongoose = require('mongoose')
+mongoose.Promise=require('bluebird')
 
 const app = express()
-
 var foursquare = require('./routes/foursquare')
 app.use(cors())
 app.use(bodyParser.json())
