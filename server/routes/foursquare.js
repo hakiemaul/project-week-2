@@ -10,6 +10,9 @@ router.post('/signup', controllerUser.signup)
 router.post('/signfb', controllerUser.signinFacebook)
 router.post('/validation', helpersJwt.verifyTokenAdmin)
 
+const controllerTwitter = require('../controllers/twittersearch')
 
+router.post('/timeline', controllerTwitter.findSomething)
+router.post('/image', controllerFoursquare.getVenueImage)
 
 module.exports = router

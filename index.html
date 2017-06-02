@@ -34,9 +34,9 @@
 
     <div class="flex-container">
       <div class="ui items">
-        <div id="item" class="item" v-if="user.length > 1" v-for="item in items">
+        <div id="item" class="item" v-for="item in items">
           <div class="image" >
-            <img src="http://hotelmalangbatu.com/wp-content/uploads/2017/01/LargsHotelLogo256.png">
+            <img v-bind:src="item.gambar">
           </div>
           <div class="content">
             <a class="header">{{ item.name }}</a>
@@ -44,17 +44,28 @@
               <span>{{ item.location.address }}</span>
             </div>
             <div class="description">
-              <p>tetsetsetsetsetst</p>
+              <p>{{ item.location.city }}</p>
             </div>
             <div class="extra">
-              Additional Details
-              asdfasdfasdf
+              {{ item.categories[0].name }}
             </div>
+            <a class="timeline" v-on:click="getTimeline(item.name)"href="#">Cari tahu tentang {{ item.name }}</a>
           </div>
         </div>
       </div>
     </div>
+    <div class="ui basic modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Hasil Pencarian
+      </div>
+      <div class="content" v-for="tweet in timeline">
+        <p>@{{ tweet.user.screen_name }}</p>
+        <p>{{ tweet.text }}</p>
+        <p></p>
+      </div>
   </div>
+</div>
 
   <script src="./js/app.js"></script>
 </body>
