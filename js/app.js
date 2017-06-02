@@ -4,7 +4,8 @@ var app = new Vue({
           items:[],
           near: '',
           query: '',
-          user: ''
+          token: '',
+          timeline: []
         },
   methods: {
     search: function() {
@@ -31,6 +32,24 @@ var app = new Vue({
       .then(response => {
         venue.gambar = `${response.data[0].prefix}300x300${response.data[0].suffix}`
         self.items.push(venue)
+      })
+      .catch(err =>{
+        console.log(err);
+      })
+    },
+    getTimeline: function(venuename) {
+      let self = this;
+      self.timeline = [];
+      console.log(venuename)
+      axios.post('http://localhost:3000/api/timeline', {
+        search: venuename
+      })
+      .then(response => {
+        self.timeline = response.data.statuses;
+        console.log(response.data.statuses)
+        $('.ui.basic.modal')
+          .modal('show')
+        ;
       })
       .catch(err =>{
         console.log(err);
