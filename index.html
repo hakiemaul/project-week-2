@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Welcome FIVESQUARE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/fb-script.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <div id="app" class="container">
+    <div class="ui menu" style="background-color:#2D5BE3;">
+      <div class="header item" style="color:white; font-size:20px">
+        FIVESQUARE
+      </div>
+      <div class="ui input">
+        <input id="query" type="text" placeholder="I'm looking for..." v-model="query">
+      </div>
+      <div class="ui icon input">
+        <input id="near" type="text" placeholder="City" v-model="near">
+        <a v-on:click="search" href="#"><i class="search icon"></i></a>
+      </div>
+      <div class="right menu">
+        <fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();">
+        </fb:login-button>
+      </div>
+    </div>
+
+    <div class="flex-container">
+      <div class="ui items">
+        <div id="item" class="item" v-for="item in items">
+          <div class="image" >
+            <img v-bind:src="item.gambar">
+          </div>
+          <div class="content">
+            <a class="header">{{ item.name }}</a>
+            <div class="meta">
+              <span>{{ item.location.address }}</span>
+            </div>
+            <div class="description">
+              <p>{{ item.location.city }}</p>
+            </div>
+            <div class="extra">
+              {{ item.categories[0].name }}
+            </div>
+            <a class="timeline" v-on:click="getTimeline(item.name)"href="#">Cari tahu tentang {{ item.name }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Hasil Pencarian
+      </div>
+      <div class="content" v-for="tweet in timeline">
+        <p>@{{ tweet.user.screen_name }}</p>
+        <p>{{ tweet.text }}</p>
+        <p></p>
+      </div>
+  </div>
+</div>
+
+  <script src="./js/app.js"></script>
+</body>
+
+</html>
