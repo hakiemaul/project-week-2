@@ -12,5 +12,16 @@ module.exports = {
 		.catch(err=>{
 			console.log(err)
 		})
+	},
+	getVenueImage: (req, res) => {
+		var venueId = req.body.venueId;
+		axios.get(`https://api.foursquare.com/v2/venues/${venueId}/photos?oauth_token=5LSZM4DSYBQDWTM33RPHIHD2UEVQRDK2JVP1BGIBAHGPSCLJ&v=20170602`)
+		.then(response => {
+			console.log(response.data.response)
+			res.send(response.data.response.photos.items)
+		})
+		.catch(err => {
+			res.send(err)
+		})
 	}
 }
