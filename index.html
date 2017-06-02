@@ -49,11 +49,23 @@
             <div class="extra">
               {{ item.categories[0].name }}
             </div>
+            <a class="timeline" v-on:click="getTimeline(item.name)"href="#">Cari tahu tentang {{ item.name }}</a>
           </div>
         </div>
       </div>
     </div>
+    <div class="ui basic modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Hasil Pencarian
+      </div>
+      <div class="content" v-for="tweet in timeline">
+        <p>@{{ tweet.user.screen_name }}</p>
+        <p>{{ tweet.text }}</p>
+        <p></p>
+      </div>
   </div>
+</div>
 
   <script src="./js/app.js"></script>
 </body>
