@@ -1,0 +1,52 @@
+body{
+  background-image: url(https://st.depositphotos.com/1510192/4921/v/950/depositphotos_49215025-City-map-abstract-seamless-pattern-vector-background.jpg);
+}
+
+.container{
+
+}
+
+.banner img{
+  width: 10%
+}
+
+.slide-bar{
+
+}
+.geser{
+  padding-left: 1%;
+}
+
+.flex-container{
+   display: flex;
+   flex-wrap: wrap;
+   /*background: rgba(45,91,227,.9);*/
+   background-color: white;
+}
+
+.flex-item {
+  flex-direction: row;
+  float: left;
+  border-radius: 5px;
+}
+
+.flex-item-sidebar {
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+
+#home:hover{
+filter: brightness(85%);
+}
+
+#dog:hover{
+filter: brightness(85%);
+}
+
+#cat:hover{
+filter: brightness(85%);
+}
+
+#small-animals:hover{
+filter: brightness(85%);
