@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/fb-script.js"></script>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 
@@ -19,29 +20,28 @@
         FIVESQUARE
       </div>
       <div class="ui input">
-        <input type="text" placeholder="I'm looking for...">
+        <input id="query" type="text" placeholder="I'm looking for..." v-model="query">
       </div>
       <div class="ui icon input">
-        <input type="text" placeholder="City">
-        <i class="search icon"></i>
+        <input id="near" type="text" placeholder="City" v-model="near">
+        <a v-on:click="search" href="#"><i class="search icon"></i></a>
       </div>
       <div class="right menu">
-        <a class="item" style="color:white;">
-          LOGIN
-        </a>
+        <fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();">
+        </fb:login-button>
       </div>
     </div>
 
     <div class="flex-container">
       <div class="ui items">
-        <div id="item" class="item">
+        <div id="item" class="item" v-if="user.length > 1" v-for="item in items">
           <div class="image" >
             <img src="http://hotelmalangbatu.com/wp-content/uploads/2017/01/LargsHotelLogo256.png">
           </div>
           <div class="content">
-            <a class="header">Header</a>
+            <a class="header">{{ item.name }}</a>
             <div class="meta">
-              <span>Description</span>
+              <span>{{ item.location.address }}</span>
             </div>
             <div class="description">
               <p>tetsetsetsetsetst</p>

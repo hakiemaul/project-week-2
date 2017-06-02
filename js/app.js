@@ -1,18 +1,26 @@
 var app = new Vue({
   el:'#app',
   data: {
-          items:[]
+          items:[],
+          near: '',
+          query: '',
+          user: ''
         },
-  created: function(){
-    let self=this
-    axios.get('http://localhost:3000/items')
-    .then(response =>{
-      console.log(response.data[0]);
-      self.items=response.data;
-    })
-    .catch(err =>{
-      console.log(err);
-    })
+  methods: {
+    search: function() {
+      let self=this
+      axios.post('http://localhost:3000/api/venue', {
+        near: self.near,
+        query: self.query
+      })
+      .then(response =>{
+        console.log(response);
+        self.items = response.data.venues;
+      })
+      .catch(err =>{
+        console.log(err);
+      })
+    }
   }
 
 })
