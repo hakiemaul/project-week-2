@@ -4,7 +4,8 @@ var app = new Vue({
           items:[],
           near: '',
           query: '',
-          token: '',
+          token: false,
+          identity: [],
           timeline: []
         },
   methods: {
@@ -13,9 +14,11 @@ var app = new Vue({
       self.items = [];
       axios.post('http://localhost:3000/api/venue', {
         near: self.near,
-        query: self.query
+        query: self.query,
+        token: localStorage.getItem('token')
       })
       .then(response =>{
+        console.log(response)
         response.data.venues.forEach(item => {
           self.getImage(item)
         })
@@ -54,7 +57,50 @@ var app = new Vue({
       .catch(err =>{
         console.log(err);
       })
+    },
+    signout: function(){
+      window.localStorage.clear()
+      localStorage.removeItem('token')
+      localStorage.removeItem('responseFb')
+      location.reload()
+    },
+    signin : function(){
+      var self = this
+      axios.post('http://localhost:3000/api/signin',{
+        username : self.username,
+        password : self.password
+      })
+      .then((response)=>{
+        console.log(response)
+        if(response.data.token===undefined){
+        location.reload()
+        }else{
+          localStorage.setItem("token", response.data.token);
+          location.reload()
+        }
+      })
+    },validation: function(){
+      var self = this
+      axios.post('http://localhost:3000/api/validation',{
+        token : localStorage.getItem('token')
+      })
+      .then(result=>{
+        if(!result.data.name)
+        {
+          localStorage.clear()
+          self.token = false
+        }else{
+          self.identity = JSON.parse(localStorage.getItem('responseFb'))
+          self.token = true
+          console.log(self.identity.name)
+        }
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
+  },
+  created(){
+    this.validation()
   }
-
 })

@@ -10,7 +10,7 @@
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./js/fb-script.js"></script>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="./client/css/main.css">
 </head>
 
 <body>
@@ -19,20 +19,32 @@
       <div class="header item" style="color:white; font-size:20px">
         FIVESQUARE
       </div>
-      <div class="ui input">
+      <div class="ui input" v-if="token == false">
+        <input id="query" type="text" placeholder="I'm looking for..." v-model="query" readonly>
+      </div>
+      <div class="ui input" v-else>
         <input id="query" type="text" placeholder="I'm looking for..." v-model="query">
       </div>
-      <div class="ui icon input">
-        <input id="near" type="text" placeholder="City" v-model="near">
-        <a v-on:click="search" href="#"><i class="search icon"></i></a>
+      <div class="ui icon input" v-if="token == false">
+        <input id="near" type="text" placeholder="City" v-model="near" readonly>
       </div>
-      <div class="right menu">
-        <fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();">
-        </fb:login-button>
+      <div class="ui icon input" v-else>
+        <input id="near" type="text" placeholder="City" v-model="near">
+      </div>
+      <button class="ui default button" v-on:click="search">Cari </button>
+
+
+      <div class="right menu" style="padding-right: 20px; " v-if="token == false">
+        <a id="signup" href="#" class="ui item"><h4 style="color : #ffffff;">SignUp</h4></a>
+        <a id="signin" href="#" class="ui item"><h4 style="color : #ffffff;">SignIn</h4></a>
+      </div>
+      <div class="right menu" style="padding-right: 20px; " v-else>
+        <a  href="#" class="ui item"><h4 style="color : #ffffff;">Welcome {{identity.name}}</h4></a>
+        <a id="signout" href="#" class="ui item" v-on:click="signout"><h4 style="color : #ffffff;">Sign Out</h4></a>
       </div>
     </div>
 
-    <div class="flex-container">
+    <div class="flex-container" style="margin-left:50px;">
       <div class="ui items">
         <div id="item" class="item" v-for="item in items">
           <div class="image" >
@@ -52,6 +64,7 @@
             <a class="timeline" v-on:click="getTimeline(item.name)"href="#">Cari tahu tentang {{ item.name }}</a>
           </div>
         </div>
+
       </div>
     </div>
     <div class="ui basic modal">
@@ -65,9 +78,37 @@
         <p></p>
       </div>
   </div>
+  <div class="ui modal small">
+    <i class="close icon"></i>
+    <div class="header">
+      Sign In
+    </div>
+    <div class="image content">
+      <div class="description">
+        <div class="ui input">
+          <input type="text" placeholder="Username">
+        </div>
+        <div class="ui input">
+          <input type="text" placeholder="Password">
+        </div>
+        <button class="ui primary button">Login </button> OR <fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();"></fb:login-button>
+      </div>
+    </div>
+  </div>
 </div>
 
   <script src="./js/app.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#signin').click(function(){
+      console.log('inn')
+    $('.small.ui.modal')
+      .modal('show')
+    ;
+  })
+})
+
+</script>
 </body>
 
 </html>
